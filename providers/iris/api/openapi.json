@@ -27,11 +27,17 @@
         "summary": "Analyze a wallet, token or program",
         "description": "Reads an address's latest transactions and returns what it is (exchange, bot, drainer, token creator...), its risk level and score, behaviours with example transactions, who funded it, its counterparties, money in and out, and the exchanges and mixers it used. For a Solana token mint: its creator, launch bundle, red flags and top holders. $0.05, or $0.10 when depth is above 1,000.",
         "x-payment-info": {
+          "price": {
+            "mode": "dynamic",
+            "currency": "USD",
+            "min": "0.05",
+            "max": "0.10"
+          },
           "protocols": [
-            "x402"
-          ],
-          "pricingMode": "dynamic",
-          "price": "$0.05-$0.10"
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -160,11 +166,16 @@
         "summary": "Trace a transfer through a mixer, exchange or swap service",
         "description": "Follows one deposit or withdrawal through a privacy pool (Privacy Cash, Cloak, Umbra, Tornado Cash, Railgun, Privacy Pools...), a Bitcoin CoinJoin, an exchange or an instant-swap service (SideShift, FixedFloat, ChangeNOW...) and ranks the wallets on the other side by timing and amount, with a confidence. Results are leads, not proof. The fields come from the connections[].transfers of an /analyze response. $0.25.",
         "x-payment-info": {
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.25"
+          },
           "protocols": [
-            "x402"
-          ],
-          "pricingMode": "fixed",
-          "price": "$0.25"
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -286,11 +297,16 @@
         "summary": "Find a token's insiders",
         "description": "Takes a token's creator, its earliest buyers, the wallets handed tokens at launch and its largest holders, walks back each wallet's funding and returns the wallets linked to the creator by money, each with the payments that link them. Solana tokens, or Robinhood Chain and BNB Chain ones with chain. $0.10.",
         "x-payment-info": {
+          "price": {
+            "mode": "fixed",
+            "currency": "USD",
+            "amount": "0.10"
+          },
           "protocols": [
-            "x402"
-          ],
-          "pricingMode": "fixed",
-          "price": "$0.10"
+            {
+              "x402": {}
+            }
+          ]
         },
         "requestBody": {
           "required": true,
@@ -391,6 +407,14 @@
           "application/json": {
             "schema": {
               "type": "object"
+            }
+          }
+        },
+        "headers": {
+          "PAYMENT-REQUIRED": {
+            "description": "Base64 JSON x402 v2 payment requirements: scheme exact, network solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp, USDC, atomic amount and payTo.",
+            "schema": {
+              "type": "string"
             }
           }
         }
